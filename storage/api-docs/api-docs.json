@@ -1,0 +1,218 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Edu API",
+        "description": "All API",
+        "contact": {
+            "email": "sagarprajapati680@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/classes": {
+            "get": {
+                "summary": "Get all class",
+                "operationId": "classes",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/class-content/{classid}": {
+            "get": {
+                "summary": "Get class all content",
+                "operationId": "class_all_content",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/content/{contentid}": {
+            "get": {
+                "summary": "Get content by id",
+                "operationId": "content",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "summary": "Login",
+                "operationId": "login",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/signup": {
+            "post": {
+                "summary": "Register",
+                "operationId": "register",
+                "parameters": [
+                    {
+                        "name": "first_name",
+                        "in": "query",
+                        "description": "First name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "description": "Last name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Status",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "active",
+                            "inactive"
+                        ]
+                    },
+                    {
+                        "name": "user_type",
+                        "in": "query",
+                        "description": "User Type",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "user"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/create-order": {
+            "post": {
+                "summary": "Create Order",
+                "operationId": "create_order",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "User Id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "plan_id",
+                        "in": "query",
+                        "description": "Plan Id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "gateway",
+                        "in": "query",
+                        "description": "Payment Gateway",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "razorpay",
+                            "paytm",
+                            "gooaleiap",
+                            "appleiap"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/subscription-plans": {
+            "get": {
+                "summary": "Get all subscription plans",
+                "operationId": "all_subscription_plans",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/subscription-plan-details/{planid}": {
+            "get": {
+                "summary": "Get subscription plan details",
+                "operationId": "subscription_plan_details",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/user-details": {
+            "get": {
+                "summary": "Get User Details",
+                "operationId": "user_id",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "user id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {}
+}

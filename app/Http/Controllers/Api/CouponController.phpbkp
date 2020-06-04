@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Coupon;
+use App\CouponPlanItem;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class CouponController extends Controller {
+	public function getCoupons(Request $request) {
+		$coupons = Coupon::select('id', 'name', 'description', 'code', 'discount', 'discount_type', 'start_date', 'end_date', 'status')->where('status', 'active')->orderby('name', 'asc')->get();
+		if ($coupons) {
+			foreach ($coupons as $key => $c) {
+				$c['plans'] = CouponPlanItem::where('coupon_id', $c->id)->select('plan_id')->get();
+			}
+			$data['status'] = 'success';
+			$data['coupons'] = $coupons;
+		} else {
+			$data['status'] = 'fail';
+			$data['message'] = 'Coupon not found.';
+		}
+		return response()->json($data);
+	}
+
+	/**
+	 *@SWG\Get(
+	 *     path="/api/coupons",
+	 *     summary="Get all coupons",
+	 *     operationId="coupons",
+	 *     @SWG\Response(response=200, description="Successful operation")
+	 * )
+	 */
+
+	public function getCouponDetails(Request $request, $coupon_id) {
+		$coupon = Coupon::select('id', 'name', 'description', 'code', 'discount', 'discount_type', 'start_date', 'end_date', 'status')->find($coupon_id);
+		if ($coupon) {
+
+			$coupon_plans = CouponPlanItem::where('coupon_id', $coupon_id)->get();
+			$plans = array();
+			foreach ($coupon_plans as $key => $c) {
+				$plans[] = \App\SubscriptionPlan::select('id', 'name', 'description', 'amount', 'status')->find($c->plan_id);
+
+			}
+			$data['status'] = 'success';
+			$data['coupon'] = $coupon;
+			$data['plans'] = $plans;
+		} else {
+			$data['status'] = 'fail';
+			$data['message'] = 'Coupon not found.';
+		}
+		return response()->json($data);
+	}
+
+	/**
+	 *@SWG\Get(
+	 *     path="/api/coupon-details/{couponid}",
+	 *     summary="Get coupon details",
+	 *     operationId="coupon_details",
+	 *     @SWG\Response(response=200, description="Successful operation")
+	 * )
+	 */
+
+	public function getPlanCoupons(Request $request, $plan_id) {
+		$coupon_plans = CouponPlanItem::where('plan_id', $plan_id)->get();
+		if ($coupon_plans) {
+			$coupons = array();
+			foreach ($coupon_plans as $key => $c) {
+				$coupons[] = \App\Coupon::select('id', 'name', 'description', 'code', 'discount', 'discount_type', 'start_date', 'end_date', 'status')->find($c->coupon_id);
+
+			}
+			$data['status'] = 'success';
+			$data['coupons'] = $coupons;
+		} else {
+			$data['status'] = 'fail';
+			$data['message'] = 'Coupon not found.';
+		}
+		return response()->json($data);
+	}
+
+	/**
+	 *@SWG\Get(
+	 *     path="/api/plan-coupons/{planid}",
+	 *     summary="Get plan coupons",
+	 *     operationId="plan_coupons",
+	 *     @SWG\Response(response=200, description="Successful operation")
+	 * )
+	 */
+
+}
